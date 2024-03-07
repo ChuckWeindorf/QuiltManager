@@ -19,5 +19,5 @@ export default {
   },
   port: parseInt(process.env.PORT),
   etsyKey: process.env.ETSY_API_KEY,
-  artifactPath: process.env.ARTIFACT_PATH
+  artifactPath: process.env.ARTIFACT_PATH,
 };

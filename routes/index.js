@@ -11,7 +11,7 @@ import fileUpload from "express-fileupload";
 const mainRouter = express.Router();
 
 mainRouter.use(fileUpload());
-//Middleware 
+//Middleware
 // this stands on top of /api/
 mainRouter.use("/customers", customersRouter);
 mainRouter.use("/sales", salesRouter);
@@ -20,6 +20,5 @@ mainRouter.use("/sales_artifacts", sales_artifactsRouter);
 mainRouter.use("/favorites", favoritesRouter);
 
 mainRouter.use("/etsytaxonomy", etsyRouter);
-
 
 export default mainRouter;

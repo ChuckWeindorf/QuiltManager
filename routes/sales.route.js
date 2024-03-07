@@ -1,6 +1,12 @@
 import express from "express";
-import { getAll, getOne, insertOne, getAllCust, updateOne, deleteOne } 
-    from "../controllers/sales.controller";
+import {
+  getAll,
+  getOne,
+  insertOne,
+  getAllCust,
+  updateOne,
+  deleteOne,
+} from "../controllers/sales.controller";
 
 const salesRouter = express.Router();
 
@@ -10,9 +16,11 @@ const salesRouter = express.Router();
 salesRouter.get("/customer/:cintID?", async (objRequest, objResponse, next) => {
   try {
     let { cintID } = objRequest.params;
-    let saleData = await getAllCust(cintID);   
+    let saleData = await getAllCust(cintID);
     objResponse.json(saleData);
-  }  catch (objError) {next(objError)};
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
@@ -27,10 +35,11 @@ salesRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
     } else {
       saleData = await getAll();
     }
-   
-    objResponse.json(saleData);
-  }  catch (objError) {next(objError)};
 
+    objResponse.json(saleData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
@@ -38,22 +47,26 @@ salesRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
  */
 salesRouter.post("/", async (objRequest, objResponse, next) => {
   try {
-  let saleBody = objRequest.body;
-  let saleData = await insertOne(saleBody);
-  objResponse.json(saleData);
-  } catch (objError) {next(objError)};
+    let saleBody = objRequest.body;
+    let saleData = await insertOne(saleBody);
+    objResponse.json(saleData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
  * Put actions for sales database sent to sales controller
  */
 salesRouter.put("/:cintID", async (objRequest, objResponse, next) => {
-  try{
-  let { cintID } = objRequest.params;
-  let saleBody = objRequest.body;
-  let saleData = await updateOne(cintID, saleBody);
-  objResponse.json(saleData);
-  }  catch (objError) {next(objError)};
+  try {
+    let { cintID } = objRequest.params;
+    let saleBody = objRequest.body;
+    let saleData = await updateOne(cintID, saleBody);
+    objResponse.json(saleData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
@@ -61,10 +74,12 @@ salesRouter.put("/:cintID", async (objRequest, objResponse, next) => {
  */
 salesRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   try {
-  let { cintID } = objRequest.params;
-  let saleData = await deleteOne(cintID);
-  objResponse.json(saleData);
-  } catch (objError) {next(objError)};
+    let { cintID } = objRequest.params;
+    let saleData = await deleteOne(cintID);
+    objResponse.json(saleData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 export default salesRouter;

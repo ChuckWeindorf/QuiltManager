@@ -1,6 +1,11 @@
 import express from "express";
-import { getAll, getOne, insertOne, updateOne, deleteOne } 
-    from "../controllers/customers.controller";
+import {
+  getAll,
+  getOne,
+  insertOne,
+  updateOne,
+  deleteOne,
+} from "../controllers/customers.controller";
 
 const customersRouter = express.Router();
 
@@ -16,10 +21,11 @@ customersRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
     } else {
       customerData = await getAll();
     }
-   
-    objResponse.json(customerData);
-  }  catch (objError) {next(objError)};
 
+    objResponse.json(customerData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
@@ -27,22 +33,26 @@ customersRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
  */
 customersRouter.post("/", async (objRequest, objResponse, next) => {
   try {
-  let customerBody = objRequest.body;
-  let customerData = await insertOne(customerBody);
-  objResponse.json(customerData);
-  } catch (objError) {next(objError)};
+    let customerBody = objRequest.body;
+    let customerData = await insertOne(customerBody);
+    objResponse.json(customerData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
  * Put actions for customers database sent to customers controller
  */
 customersRouter.put("/:cintID", async (objRequest, objResponse, next) => {
-  try{
-  let { cintID } = objRequest.params;
-  let customerBody = objRequest.body;
-  let customerData = await updateOne(cintID, customerBody);
-  objResponse.json(customerData);
-  }  catch (objError) {next(objError)};
+  try {
+    let { cintID } = objRequest.params;
+    let customerBody = objRequest.body;
+    let customerData = await updateOne(cintID, customerBody);
+    objResponse.json(customerData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 /**
@@ -50,10 +60,12 @@ customersRouter.put("/:cintID", async (objRequest, objResponse, next) => {
  */
 customersRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   try {
-  let { cintID } = objRequest.params;
-  let customerData = await deleteOne(cintID);
-  objResponse.json(customerData);
-  } catch (objError) {next(objError)};
+    let { cintID } = objRequest.params;
+    let customerData = await deleteOne(cintID);
+    objResponse.json(customerData);
+  } catch (objError) {
+    next(objError);
+  }
 });
 
 export default customersRouter;
