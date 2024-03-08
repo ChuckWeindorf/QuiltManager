@@ -1,5 +1,5 @@
 //controller between mysql and the express routes for favorites
-import quiltQuery from "../database/connection";
+const quiltQuery = require("../database/connection");
 
 /**
  *
@@ -54,4 +54,4 @@ async function deleteOne(cintID) {
   ]);
 }
 
-export { getAll, getOne, insertOne, updateOne, deleteOne };
+module.exports = {getAll, getOne, insertOne, updateOne, deleteOne}

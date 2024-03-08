@@ -1,6 +1,6 @@
-import config from "../config";
+const config = require("../config");
 // Import the express and fetch libraries
-import express from "express";
+const express = require("express");
 
 // Create a new express application
 const etsyRouter = express.Router();
@@ -31,4 +31,4 @@ etsyRouter.get("/", async (req, res) => {
   }
 });
 
-export default etsyRouter;
+module.exports = etsyRouter;

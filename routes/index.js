@@ -1,16 +1,18 @@
-import express from "express";
-import customersRouter from "./customers.route";
-import salesRouter from "./sales.route";
-import artifactsRouter from "./artifacts.route";
-import sales_artifactsRouter from "./sales_artifacts.route";
-import favoritesRouter from "./favorites.route";
-import etsyRouter from "./etsy.route";
+const express = require("express");
+const customersRouter = require("./customers.route");
+const salesRouter = require("./sales.route");
+const artifactsRouter = require("./artifacts.route");
+const sales_artifactsRouter = require("./sales_artifacts.route");
+const favoritesRouter = require("./favorites.route");
+const etsyRouter = require("./etsy.route");
 
-import fileUpload from "express-fileupload";
 
 const mainRouter = express.Router();
 
+//required to pass formdata and file payloads
+const fileUpload = require("express-fileupload");
 mainRouter.use(fileUpload());
+//
 //Middleware
 // this stands on top of /api/
 mainRouter.use("/customers", customersRouter);
@@ -21,4 +23,4 @@ mainRouter.use("/favorites", favoritesRouter);
 
 mainRouter.use("/etsytaxonomy", etsyRouter);
 
-export default mainRouter;
+module.exports = mainRouter;

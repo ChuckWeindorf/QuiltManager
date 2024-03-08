@@ -1,12 +1,13 @@
-import express from "express";
-import {
-  getAll,
-  getOne,
-  insertOne,
-  getAllCust,
-  updateOne,
-  deleteOne,
-} from "../controllers/sales.controller";
+const express = require("express");
+
+
+const objImport = require("../controllers/sales.controller");
+const getAll = objImport.getAll;
+const getOne = objImport.getOne;
+const insertOne = objImport.insertOne;
+const updateOne = objImport.updateOne;
+const deleteOne = objImport.deleteOne;
+const getAllCust = objImport.getAllCust;
 
 const salesRouter = express.Router();
 
@@ -82,4 +83,4 @@ salesRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   }
 });
 
-export default salesRouter;
+module.exports = salesRouter;

@@ -1,11 +1,11 @@
-import express from "express";
-import {
-  getAll,
-  getOne,
-  insertOne,
-  updateOne,
-  deleteOne,
-} from "../controllers/customers.controller";
+const express = require("express");
+
+const objImport = require("../controllers/customers.controller");
+const getAll = objImport.getAll;
+const getOne = objImport.getOne;
+const insertOne = objImport.insertOne;
+const updateOne = objImport.updateOne;
+const deleteOne = objImport.deleteOne;
 
 const customersRouter = express.Router();
 
@@ -68,4 +68,4 @@ customersRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   }
 });
 
-export default customersRouter;
+module.exports = customersRouter;

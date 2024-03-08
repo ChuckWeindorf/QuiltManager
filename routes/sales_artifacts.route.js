@@ -1,12 +1,12 @@
-import express from "express";
-import {
-  getAll,
-  getOne,
-  insertOne,
-  updateOne,
-  deleteOne,
-  getOneWorkOrder,
-} from "../controllers/sales_artifacts.controller";
+const express = require("express");
+
+const objImport = require("../controllers/sales_artifacts.controller");
+const getAll = objImport.getAll;
+const getOne = objImport.getOne;
+const insertOne = objImport.insertOne;
+const updateOne = objImport.updateOne;
+const deleteOne = objImport.deleteOne;
+const getOneWorkOrder = objImport.getOneWorkOrder;
 
 const sales_artifactsRouter = express.Router();
 
@@ -94,4 +94,4 @@ sales_artifactsRouter.delete(
   }
 );
 
-export default sales_artifactsRouter;
+module.exports = sales_artifactsRouter;

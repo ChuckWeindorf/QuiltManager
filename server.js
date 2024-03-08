@@ -1,7 +1,7 @@
-import express from "express";
-import config from "./config";
-import mainRouter from "./routes";
-import cors from "cors";
+const express = require("express");
+const config = require("./config");
+const mainRouter = require("./routes");
+const cors = require("cors");
 
 const appQuilt = express();
 

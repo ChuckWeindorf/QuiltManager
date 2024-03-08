@@ -1,16 +1,14 @@
-import express from "express";
-import * as fs from "fs";
-import config from "../config";
-
-import {
-  getAll,
-  getOne,
-  getCats,
-  getCatList,
-  insertOne,
-  updateOne,
-  deleteOne,
-} from "../controllers/artifacts.controller";
+const express = require("express");
+const fs = require("fs");
+const config = require("../config");
+const objImport = require("../controllers/artifacts.controller")
+const getAll = objImport.getAll;
+const getOne = objImport.getOne;
+const getCats = objImport.getCats;
+const getCatList = objImport.getCatList;
+const insertOne = objImport.insertOne;
+const updateOne = objImport.updateOne;
+const deleteOne = objImport.deleteOne;
 
 const artifactsRouter = express.Router();
 
@@ -29,9 +27,7 @@ artifactsRouter.get("/categories", async (objRequest, objResponse, next) => {
 /**
  * Get the images in a category from artifacts
  */
-artifactsRouter.get(
-  "/catlist/:cstrCat",
-  async (objRequest, objResponse, next) => {
+artifactsRouter.get("/catlist/:cstrCat", async (objRequest, objResponse, next) => {
     try {
       let { cstrCat } = objRequest.params;
       let artifactData = await getCatList(cstrCat);
@@ -108,6 +104,7 @@ artifactsRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
  */
 artifactsRouter.post("/upload", (req, res, next) => {
   try {
+    //console.log(req.body);
     //console.log(req.body," AND FILES ", req.files.file);
     const savePath = require("path").join(
       `${config.artifactPath}${req.body.category}/${req.files.file.name}`
@@ -117,11 +114,11 @@ artifactsRouter.post("/upload", (req, res, next) => {
       if (err) {
         return console.log(err);
       }
-      //else console.log("A file was written!")
+    //  else console.log("A file was written!")
     });
   } catch (objError) {
     next(objError);
   }
 });
 
-export default artifactsRouter;
+module.exports = artifactsRouter;

@@ -1,5 +1,5 @@
 //controller between mysql and the express routes for salesartifacts
-import quiltQuery from "../database/connection";
+const quiltQuery = require("../database/connection");
 
 /**
  *
@@ -71,4 +71,4 @@ async function deleteOne(cintID) {
   );
 }
 
-export { getAll, getOne, insertOne, updateOne, deleteOne, getOneWorkOrder };
+module.exports = {getAll, getOne, getOneWorkOrder, insertOne, updateOne, deleteOne}

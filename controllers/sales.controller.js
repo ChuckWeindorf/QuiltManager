@@ -1,5 +1,5 @@
 //controller between mysql and the express routes for sales
-import quiltQuery from "../database/connection";
+const quiltQuery = require("../database/connection");
 
 //include left join for required customer information
 const cstrQueryString =
@@ -69,4 +69,4 @@ async function deleteOne(cintID) {
   return await quiltQuery(`DELETE FROM sales WHERE SaleID = ?`, [cintID]);
 }
 
-export { getAll, getOne, getAllCust, insertOne, updateOne, deleteOne };
+ module.exports = {getAll, getOne, getAllCust, insertOne, updateOne, deleteOne}

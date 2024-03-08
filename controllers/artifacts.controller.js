@@ -1,5 +1,5 @@
 //controller between mysql and the express routes for artifacts
-import quiltQuery from "../database/connection";
+const quiltQuery = require("../database/connection");
 
 /**
  *
@@ -27,7 +27,7 @@ async function getOne(cintID) {
  * @returns list of unique categories available in artifacts OR error object
  */
 async function getCats() {
-  return await quiltQuery("SELECT DISTINCT category FROM artifacts", []);
+  return await quiltQuery("SELECT DISTINCT category FROM artifacts WHERE NOT category = 'Workorders'", []);
 }
 
 /**
@@ -76,4 +76,4 @@ async function deleteOne(cintID) {
   ]);
 }
 
-export { getAll, getOne, getCats, getCatList, insertOne, updateOne, deleteOne };
+module.exports = {getAll, getOne, getCats, getCatList, insertOne, updateOne, deleteOne}

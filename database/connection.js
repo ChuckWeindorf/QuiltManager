@@ -1,5 +1,5 @@
-import mysql from "mysql2";
-import config from "../config";
+const mysql = require("mysql2");
+const config = require("../config");
 
 const quiltConnection = mysql.createPool(config.mysql);
 
@@ -22,4 +22,4 @@ function quiltQuery(cstrQuery, cstrValues) {
   });
 }
 
-export default quiltQuery;
+module.exports = quiltQuery;

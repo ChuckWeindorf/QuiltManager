@@ -1,11 +1,11 @@
-import express from "express";
-import {
-  getAll,
-  getOne,
-  insertOne,
-  updateOne,
-  deleteOne,
-} from "../controllers/favorites.controller";
+const express = require("express");
+
+const objImport = require("../controllers/favorites.controller");
+const getAll = objImport.getAll;
+const getOne = objImport.getOne;
+const insertOne = objImport.insertOne;
+const updateOne = objImport.updateOne;
+const deleteOne = objImport.deleteOne;
 
 const favoritesRouter = express.Router();
 
@@ -69,4 +69,4 @@ favoritesRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   }
 });
 
-export default favoritesRouter;
+module.exports = favoritesRouter;
