@@ -21,4 +21,5 @@ module.exports = {
   port: parseInt(process.env.PORT),
   etsyKey: process.env.ETSY_API_KEY,
   artifactPath: process.env.ARTIFACT_PATH,
+  qmAPIkey: process.env.API_KEY 
 };

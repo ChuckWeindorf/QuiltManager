@@ -1,7 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const config = require("../config");
-const objImport = require("../controllers/artifacts.controller")
+const objImport = require("../controllers/artifacts.controller");
+const API = require('../controllers/apiAuthenticate');
 const getAll = objImport.getAll;
 const getOne = objImport.getOne;
 const getCats = objImport.getCats;
@@ -17,8 +18,17 @@ const artifactsRouter = express.Router();
  */
 artifactsRouter.get("/categories", async (objRequest, objResponse, next) => {
   try {
-    let artifactData = await getCats();
-    objResponse.json(artifactData);
+    if (API.authenticateKey(objRequest))
+      {
+      let artifactData = await getCats();
+      objResponse.json(artifactData);
+      }
+      else
+      {
+      objResponse
+         .status(403)
+         .send({ error: { code: 403, message: "Invalid credentials." } });
+      }
   } catch (objError) {
     next(objError);
   }
@@ -29,10 +39,19 @@ artifactsRouter.get("/categories", async (objRequest, objResponse, next) => {
  */
 artifactsRouter.get("/catlist/:cstrCat", async (objRequest, objResponse, next) => {
     try {
+      if (API.authenticateKey(objRequest))
+      {      
       let { cstrCat } = objRequest.params;
       let artifactData = await getCatList(cstrCat);
       //console.log(artifactData);
       objResponse.json(artifactData);
+    }
+    else
+    {
+    objResponse
+       .status(403)
+       .send({ error: { code: 403, message: "Invalid credentials." } });
+    }
     } catch (objError) {
       next(objError);
     }
@@ -44,6 +63,8 @@ artifactsRouter.get("/catlist/:cstrCat", async (objRequest, objResponse, next) =
  */
 artifactsRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+    {   
     let { cintID } = objRequest.params;
     let artifactData;
     if (cintID) {
@@ -53,6 +74,13 @@ artifactsRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
     }
 
     objResponse.json(artifactData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -63,9 +91,18 @@ artifactsRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
  */
 artifactsRouter.post("/", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+    {  
     let artifactBody = objRequest.body;
     let artifactData = await insertOne(artifactBody);
     objResponse.json(artifactData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -76,10 +113,19 @@ artifactsRouter.post("/", async (objRequest, objResponse, next) => {
  */
 artifactsRouter.put("/:cintID", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+    {  
     let { cintID } = objRequest.params;
     let artifactBody = objRequest.body;
     let artifactData = await updateOne(cintID, artifactBody);
     objResponse.json(artifactData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -90,9 +136,18 @@ artifactsRouter.put("/:cintID", async (objRequest, objResponse, next) => {
  */
 artifactsRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+    {  
     let { cintID } = objRequest.params;
     let artifactData = await deleteOne(cintID);
     objResponse.json(artifactData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -104,6 +159,8 @@ artifactsRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
  */
 artifactsRouter.post("/upload", (req, res, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+    {  
     //console.log(req.body);
     //console.log(req.body," AND FILES ", req.files.file);
     const savePath = require("path").join(
@@ -116,6 +173,13 @@ artifactsRouter.post("/upload", (req, res, next) => {
       }
     //  else console.log("A file was written!")
     });
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }

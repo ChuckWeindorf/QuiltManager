@@ -1,5 +1,5 @@
 const express = require("express");
-
+const API = require('../controllers/apiAuthenticate');
 const objImport = require("../controllers/sales_artifacts.controller");
 const getAll = objImport.getAll;
 const getOne = objImport.getOne;
@@ -18,10 +18,19 @@ sales_artifactsRouter.get(
   async (objRequest, objResponse, next) => {
     try {
       //console.log("I AM IN TEH RIGHT PLACE");
-      let { cintID } = objRequest.params;
+      if (API.authenticateKey(objRequest))
+      {
+       let { cintID } = objRequest.params;
       let sale_artifactData;
       sale_artifactData = await getOneWorkOrder(cintID);
       objResponse.json(sale_artifactData);
+    }
+    else
+    {
+    objResponse
+       .status(403)
+       .send({ error: { code: 403, message: "Invalid credentials." } });
+    }
     } catch (objError) {
       next(objError);
     }
@@ -36,7 +45,9 @@ sales_artifactsRouter.get(
   async (objRequest, objResponse, next) => {
     try {
       //console.log("NOT THE RIGHT GET!!!!!");
-      let { cintID } = objRequest.params;
+      if (API.authenticateKey(objRequest))
+      {
+       let { cintID } = objRequest.params;
       let sale_artifactData;
       if (cintID) {
         sale_artifactData = await getOne(cintID);
@@ -45,6 +56,13 @@ sales_artifactsRouter.get(
       }
 
       objResponse.json(sale_artifactData);
+    }
+    else
+    {
+    objResponse
+       .status(403)
+       .send({ error: { code: 403, message: "Invalid credentials." } });
+    }
     } catch (objError) {
       next(objError);
     }
@@ -56,9 +74,18 @@ sales_artifactsRouter.get(
  */
 sales_artifactsRouter.post("/", async (objRequest, objResponse, next) => {
   try {
-    let sale_artifactBody = objRequest.body;
+    if (API.authenticateKey(objRequest))
+    {
+   let sale_artifactBody = objRequest.body;
     let sale_artifactData = await insertOne(sale_artifactBody);
     objResponse.json(sale_artifactData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -69,10 +96,19 @@ sales_artifactsRouter.post("/", async (objRequest, objResponse, next) => {
  */
 sales_artifactsRouter.put("/:cintID", async (objRequest, objResponse, next) => {
   try {
-    let { cintID } = objRequest.params;
+    if (API.authenticateKey(objRequest))
+    {
+   let { cintID } = objRequest.params;
     let sale_artifactBody = objRequest.body;
     let sale_artifactData = await updateOne(cintID, sale_artifactBody);
     objResponse.json(sale_artifactData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -85,9 +121,18 @@ sales_artifactsRouter.delete(
   "/:cintID",
   async (objRequest, objResponse, next) => {
     try {
-      let { cintID } = objRequest.params;
+      if (API.authenticateKey(objRequest))
+      {
+       let { cintID } = objRequest.params;
       let sale_artifactData = await deleteOne(cintID);
       objResponse.json(sale_artifactData);
+    }
+    else
+    {
+    objResponse
+       .status(403)
+       .send({ error: { code: 403, message: "Invalid credentials." } });
+    }
     } catch (objError) {
       next(objError);
     }

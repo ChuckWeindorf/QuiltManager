@@ -1,6 +1,7 @@
 const config = require("../config");
 // Import the express and fetch libraries
 const express = require("express");
+const API = require('../controllers/apiAuthenticate');
 
 // Create a new express application
 const etsyRouter = express.Router();
@@ -8,7 +9,9 @@ const etsyRouter = express.Router();
 // Send a JSON response to a default get request
 etsyRouter.get("/", async (req, res) => {
   // console.log("In etsyRouter");
-  const requestOptions = {
+  if (API.authenticateKey(req))
+  {
+    const requestOptions = {
     method: "GET",
     headers: {
       "x-api-key": config.etsyKey,
@@ -29,6 +32,13 @@ etsyRouter.get("/", async (req, res) => {
     // console.log("Error");
     res.send("oops");
   }
+}
+else
+{
+objResponse
+   .status(403)
+   .send({ error: { code: 403, message: "Invalid credentials." } });
+}
 });
 
 module.exports = etsyRouter;

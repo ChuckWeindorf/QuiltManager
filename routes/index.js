@@ -5,6 +5,7 @@ const artifactsRouter = require("./artifacts.route");
 const sales_artifactsRouter = require("./sales_artifacts.route");
 const favoritesRouter = require("./favorites.route");
 const etsyRouter = require("./etsy.route");
+const loginRouter = require("./login.route");
 
 
 const mainRouter = express.Router();
@@ -20,6 +21,7 @@ mainRouter.use("/sales", salesRouter);
 mainRouter.use("/artifacts", artifactsRouter);
 mainRouter.use("/sales_artifacts", sales_artifactsRouter);
 mainRouter.use("/favorites", favoritesRouter);
+mainRouter.use("/login", loginRouter);
 
 mainRouter.use("/etsytaxonomy", etsyRouter);
 

@@ -1,5 +1,5 @@
 const express = require("express");
-
+const API = require('../controllers/apiAuthenticate');
 const objImport = require("../controllers/favorites.controller");
 const getAll = objImport.getAll;
 const getOne = objImport.getOne;
@@ -14,6 +14,8 @@ const favoritesRouter = express.Router();
  */
 favoritesRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+      {
     let { cintID } = objRequest.params;
     let favoriteData;
     if (cintID) {
@@ -24,6 +26,13 @@ favoritesRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
 
     objResponse.json(favoriteData);
     //console.log(favoriteData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -34,9 +43,18 @@ favoritesRouter.get("/:cintID?", async (objRequest, objResponse, next) => {
  */
 favoritesRouter.post("/", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+      {
     let favoriteBody = objRequest.body;
     let favoriteData = await insertOne(favoriteBody);
     objResponse.json(favoriteData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -47,10 +65,19 @@ favoritesRouter.post("/", async (objRequest, objResponse, next) => {
  */
 favoritesRouter.put("/:cintID", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+      {
     let { cintID } = objRequest.params;
     let favoriteBody = objRequest.body;
     let favoriteData = await updateOne(cintID, favoriteBody);
     objResponse.json(favoriteData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
@@ -61,9 +88,18 @@ favoritesRouter.put("/:cintID", async (objRequest, objResponse, next) => {
  */
 favoritesRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
   try {
+    if (API.authenticateKey(objRequest))
+      {
     let { cintID } = objRequest.params;
     let favoriteData = await deleteOne(cintID);
     objResponse.json(favoriteData);
+  }
+  else
+  {
+  objResponse
+     .status(403)
+     .send({ error: { code: 403, message: "Invalid credentials." } });
+  }
   } catch (objError) {
     next(objError);
   }
