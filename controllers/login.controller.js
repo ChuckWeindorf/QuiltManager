@@ -9,10 +9,9 @@ async function checkLogin(login, password)
 {
     tmpData = await quiltQuery("SELECT * FROM login WHERE LoginName = ? AND LoginPass = MD5(?)", 
        [ login, password ]);
-    //console.log(tmpData);
     if (tmpData.length == 1)
-       {return true}
-    else {return false};
+       {return "accepted"}
+    else {return "denied"};
 };
 
 module.exports = { checkLogin }

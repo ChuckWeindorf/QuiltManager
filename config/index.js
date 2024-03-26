@@ -19,6 +19,7 @@ module.exports = {
     database: process.env.DB_SCHEMA,
   },
   port: parseInt(process.env.PORT),
+  portSSL: parseInt(process.env.PORTSSL),
   etsyKey: process.env.ETSY_API_KEY,
   artifactPath: process.env.ARTIFACT_PATH,
   qmAPIkey: process.env.API_KEY 
