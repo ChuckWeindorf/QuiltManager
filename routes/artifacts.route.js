@@ -1,5 +1,5 @@
 const express = require("express");
-const fs = require("fs");
+//const fs = require("fs");
 const config = require("../config");
 const objImport = require("../controllers/artifacts.controller");
 const API = require('../controllers/apiAuthenticate');
@@ -141,38 +141,6 @@ artifactsRouter.delete("/:cintID", async (objRequest, objResponse, next) => {
     let { cintID } = objRequest.params;
     let artifactData = await deleteOne(cintID);
     objResponse.json(artifactData);
-  }
-  else
-  {
-  objResponse
-     .status(403)
-     .send({ error: { code: 403, message: "Invalid credentials." } });
-  }
-  } catch (objError) {
-    next(objError);
-  }
-});
-
-/**
- * save a file to a variable folder on the artifacts area of local disk
- * the body must contain a category key in FormData within the req
- */
-artifactsRouter.post("/upload", (req, res, next) => {
-  try {
-    if (API.authenticateKey(objRequest))
-    {  
-    //console.log(req.body);
-    //console.log(req.body," AND FILES ", req.files.file);
-    const savePath = require("path").join(
-      `${config.artifactPath}${req.body.category}/${req.files.file.name}`
-    );
-    //console.log(savePath);
-    fs.writeFile(savePath, req.files.file.data, "base64", (err) => {
-      if (err) {
-        return console.log(err);
-      }
-    //  else console.log("A file was written!")
-    });
   }
   else
   {

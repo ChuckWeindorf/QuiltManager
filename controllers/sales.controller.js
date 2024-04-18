@@ -5,8 +5,8 @@ const quiltQuery = require("../database/connection");
 const cstrQueryString =
   "SELECT " +
   "sales.SaleID, sales.CustomerID, Worktype, WorkDescription, OrderDate, ReceivedDate, " +
-  "StartDate, CompleteDate, TargetDate, Paid, QuoteAmount, customers.LastName " +
-  "FROM sales LEFT JOIN customers ON sales.CustomerID = customers.CustomerID";
+  "StartDate, CompleteDate, TargetDate, Paid, QuoteAmount, customers.FirstName, customers.LastName " +
+  "FROM sales LEFT JOIN customers ON sales.CustomerID = customers.CustomerID ";
 
 /**
  *
@@ -14,7 +14,7 @@ const cstrQueryString =
  * @returns Array of sales objects OR error object
  */
 async function getAll() {
-  return await quiltQuery(cstrQueryString, []);
+  return await quiltQuery(cstrQueryString + ` ORDER BY OrderDate DESC`, []);
 }
 
 /**
@@ -24,7 +24,7 @@ async function getAll() {
  */
 async function getAllCust(cintID) {
   return await quiltQuery(
-    cstrQueryString + ` WHERE sales.CustomerID = ${cintID}`,
+    cstrQueryString + ` WHERE sales.CustomerID = ${cintID} ORDER BY OrderDate DESC`,
     []
   );
 }
