@@ -27,7 +27,9 @@ imagesRouter.post("/", (objRequest, objResponse, next) => {
       if (err) {
         return console.log(err);
       }
-      //else console.log("A file was written!")
+      objResponse
+      .status(200)
+      .send({ success: { code: 200, message: "Image save complete" } });
     });
   }
   else
