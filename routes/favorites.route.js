@@ -6,6 +6,7 @@ const getOne = objImport.getOne;
 const insertOne = objImport.insertOne;
 const updateOne = objImport.updateOne;
 const deleteOne = objImport.deleteOne;
+const config = require("../config");
 
 const favoritesRouter = express.Router();
 
@@ -48,6 +49,9 @@ favoritesRouter.post("/", async (objRequest, objResponse, next) => {
     let favoriteBody = objRequest.body;
     let favoriteData = await insertOne(favoriteBody);
     objResponse.json(favoriteData);
+    //
+    SendConfirmingEmail(objRequest);
+    //
   }
   else
   {
@@ -59,6 +63,43 @@ favoritesRouter.post("/", async (objRequest, objResponse, next) => {
     next(objError);
   }
 });
+
+function SendConfirmingEmail(objRequest)
+{
+  //console.log("Start NODEMAILER");
+  var nodemailer = require('nodemailer');
+  //console.log("Create Transport");
+  var transport = nodemailer.createTransport({
+    host: config.mailserver,
+    port: config.mailport,
+    secure: true,
+    auth: {
+      user: config.maillogin,
+      pass: config.mailpassword
+    }
+  });
+  //console.log("Create mail options");
+  var mailOptions = {
+    from: 'quiltmanager@debbie-quilting.com',
+    to: 'debra.weindorf@gmail.com',
+    //to: 'debbie@debbie-intarsia.com',
+    //to: 'charles.weindorf2@mudsox.com',
+    subject: 'You have a new favorite quilt pattern',
+    text: `Customer ${objRequest.body.GuestName} selected ${objRequest.body.CatFileName}`, 
+    attachments: [
+      {   // utf-8 string as an attachment
+          path: `${config.artifactPath}${objRequest.body.CatFileName}`
+      }]
+  };
+  
+  //console.log("TRY TO SENDMAIL");
+  transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    //console.log('Message sent: ', info.messageId);
+  });      
+};
 
 /**
  * Put actions for favorites database sent to favorites controller

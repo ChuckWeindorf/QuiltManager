@@ -22,5 +22,9 @@ module.exports = {
   portSSL: parseInt(process.env.PORTSSL),
   etsyKey: process.env.ETSY_API_KEY,
   artifactPath: process.env.ARTIFACT_PATH,
-  qmAPIkey: process.env.API_KEY 
+  qmAPIkey: process.env.API_KEY,
+  maillogin: process.env.MAIL_LOGIN,
+  mailpassword: process.env.MAIL_PASSWORD,
+  mailserver: process.env.MAIL_SERVER,
+  mailport: parseInt(process.env.MAIL_PORT)
 };
