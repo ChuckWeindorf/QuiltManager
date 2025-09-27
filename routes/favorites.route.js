@@ -78,10 +78,11 @@ function SendConfirmingEmail(objRequest)
       pass: config.mailpassword
     }
   });
+  
   //console.log("Create mail options");
   var mailOptions = {
-    from: 'quiltmanager@debbie-quilting.com',
-    to: 'debra.weindorf@gmail.com',
+    from: config.maillogin,
+    to: config.maillogin,
     //to: 'debbie@debbie-intarsia.com',
     //to: 'charles.weindorf2@mudsox.com',
     subject: 'You have a new favorite quilt pattern',
@@ -97,7 +98,7 @@ function SendConfirmingEmail(objRequest)
     if (error) {
       return console.log(error);
     }
-    //console.log('Message sent: ', info.messageId);
+    console.log('Message sent: ', info.messageId);
   });      
 };
 
